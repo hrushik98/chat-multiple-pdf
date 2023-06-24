@@ -11,6 +11,8 @@ from htmlTemplates import css, bot_template, user_template
 from langchain.llms import HuggingFaceHub
 import openai
 
+openai_api_key = st.secrets['openai_key']
+
 
 
 def get_pdf_text(pdf_docs):
@@ -34,7 +36,7 @@ def get_text_chunks(text):
 
 
 def get_vectorstore(text_chunks):
-    embeddings = OpenAIEmbeddings()
+    embeddings = OpenAIEmbeddings(openai_api_key)
     # embeddings = HuggingFaceInstructEmbeddings(model_name="hkunlp/instructor-xl")
     vectorstore = FAISS.from_texts(texts=text_chunks, embedding=embeddings)
     return vectorstore
